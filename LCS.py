@@ -22,10 +22,16 @@ def createTable(seqALength:int, seqBLength:int):
     # todo: 用 ltsTable directionTable 这两个变量
     pass
 
+'''
+分析输入的两个字符串并填写表格
+'''
 def analyzeSequence():
     # todo: 填好 ltsTable directionTable 这两个表
     pass
 
+'''
+输出结果
+'''
 def findLTS():
     # 输出LTS（含结果文件）
     pass
