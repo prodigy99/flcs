@@ -60,8 +60,23 @@ def analyzeSequence(seqALength:int, seqBLength:int):
 输出结果
 '''
 def findLTS():
-    # 输出LTS（含结果文件）
-    pass
+    i = len(sequenceA)
+    j = len(sequenceB)
+
+    lcs = ""
+    while i != 0 and j != 0:
+        if sequenceA[i-1]==sequenceB[j-1] :
+            lcs = sequenceA[i-1] + lcs
+            print(sequenceA[i-1])
+        
+        if directionTable[i][j] == 0 :
+            i = i - 1
+            j = j - 1
+        elif directionTable[i][j]==1:
+            i = i - 1
+        else:
+            j = j - 1
+
 
 '''
 处理CLI提供的参数
@@ -93,8 +108,8 @@ def parseCmdParams():
 
     except IndexError as e1:
         print("无法确定文件1或文件2的路径，使用测试序列ABCDEF与ACEFHB")
-        sequenceA = "ABCDEF"
-        sequenceB = "ACEFHB"
+        sequenceB = "ABCDEF"
+        sequenceA = "ACEFHB"
     except IOError as e2:
         print("无法打开文件1或文件2")
         exit(-1)
