@@ -63,11 +63,14 @@ def findLTS():
     i = len(sequenceA)
     j = len(sequenceB)
 
-    lcs = ""
+    lcsArr = [];
+    Aindex=[];
+    Bindex=[];
     while i != 0 and j != 0:
         if sequenceA[i-1]==sequenceB[j-1] :
-            lcs = sequenceA[i-1] + lcs
-            print(sequenceA[i-1])
+            lcsArr.insert(0,sequenceA[i-1])
+            Aindex.insert(0,i)
+            Bindex.insert(0,j)
         
         if directionTable[i][j] == 0 :
             i = i - 1
@@ -76,6 +79,14 @@ def findLTS():
             i = i - 1
         else:
             j = j - 1
+    
+    if printLCSIndexInFile1 == True :
+        for i in Aindex : print(i)
+    elif printLCSIndexInFile2 == True :
+        for j in Bindex : print(j)
+    else:
+        for k in lcsArr : print(k)
+        
 
 
 '''
@@ -85,24 +96,25 @@ def parseCmdParams():
     global sequenceA, sequenceB
     global printLCSIndexInFile1, printLCSIndexInFile2
     options, args = getopt(sys.argv[1:], "", ["l1", "l2"])
+    # print(options)
     for opt, value in options:
-        if ("--help", "-h") in opt:
+
+        if ("--help", "-h") in list(opt):
             print("本程序暂无帮助信息")
         if "--l1" in opt:
             printLCSIndexInFile1 = True
         if "--l2" in opt:
             printLCSIndexInFile2 = True
-        print(opt, value)
+        # print(opt, value)
 
     try:
         file1Path = args[0]
         file2Path = args[1]
 
         file1 = open(file1Path, 'r')
-        sequenceA = file1.readlines()
+        sequenceA = list(map(lambda str:str.strip(),file1.readlines()))
         file2 = open(file2Path, 'r')
-        sequenceB = file1.readlines()
-
+        sequenceB = list(map(lambda str:str.strip(),file2.readlines()))
         file1.close()
         file2.close()
 
@@ -113,7 +125,7 @@ def parseCmdParams():
     except IOError as e2:
         print("无法打开文件1或文件2")
         exit(-1)
-    
+
 if __name__ == "__main__":
     parseCmdParams()
     createTable(len(sequenceA), len(sequenceB))
