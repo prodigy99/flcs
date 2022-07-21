@@ -58,7 +58,7 @@ namespace LCS
                 SequenceA = sequenceA;
                 SequenceB = sequenceB;
                 LCSTable = new ushort[SequenceA.Length + 1, SequenceB.Length + 1];
-                DirectionTable = new LongBitArray((SequenceA.Length + 1) * (SequenceB.Length + 1) * 2);
+                DirectionTable = new LongBitArray((long)(SequenceA.Length + 1) * (long)(SequenceB.Length + 1) * 2);
             }
         }
 
@@ -68,7 +68,7 @@ namespace LCS
             {
                 for (int j = 0; j <= SequenceB.Length; ++j)
                 {
-                    int p = (i * (SequenceB.Length + 1) + j) * 2;
+                    long p = (i * (long)(SequenceB.Length + 1) + j) * 2;
                     if (i == 0 || j == 0)
                     {
                         LCSTable[i, j] = 0;
@@ -129,7 +129,7 @@ namespace LCS
                     bIndex.Push(j - 1);
                 }
 
-                int p = (i * (SequenceB.Length + 1) + j) * 2;
+                long p = (i * (long)(SequenceB.Length + 1) + j) * 2;
                 if (DirectionTable[p] && DirectionTable[p + 1])
                 {
                     --i;

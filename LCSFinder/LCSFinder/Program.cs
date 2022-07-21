@@ -26,6 +26,7 @@ namespace LCS
             stopwatch.Stop();
 
             Console.WriteLine($"LCS算法耗时：{stopwatch.Elapsed.Seconds}s");
+            Console.WriteLine($"LCS长度：{finder.LongestCommonSequence.Count}");
         }
     }
 }

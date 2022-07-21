@@ -16,14 +16,14 @@ namespace LCS
         { 
             get 
             {
-                int partition = (int)index / int.MaxValue;
+                int partition = (int)(index / int.MaxValue);
                 int offset = (int)(index % int.MaxValue);
 
                 return BitArrays[partition][offset];
             }
             set 
             {
-                int partition = (int)index / int.MaxValue;
+                int partition = (int)(index / int.MaxValue);
                 int offset = (int)(index % int.MaxValue);
 
                 BitArrays[partition][offset] = value;
