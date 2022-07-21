@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace LCS
 {
     internal class LCSFinder<T> where T : IComparable
@@ -107,19 +106,19 @@ namespace LCS
                     }
                 }
             }
-
-            FindLCS();
         }
 
-        private void FindLCS()
+        // 输出结果
+        public void showLCS(bool onlyLCS, bool l1, bool l2)
         {
+
+            using StreamWriter file = new("result.txt");
             lcs.Clear();
             aIndex.Clear();
             bIndex.Clear();
 
             int i = SequenceA.Length;
             int j = SequenceB.Length;
-
             while (i != 0 && j != 0)
             {
                 if (SequenceA[i - 1].CompareTo(SequenceB[j - 1]) == 0)
@@ -143,11 +142,37 @@ namespace LCS
                 {
                     --j;
                 }
-                else
+            }
+            if (onlyLCS)
+            {
+                while (lcs.Count > 0)
                 {
-
+                    T str = lcs.Pop();
+                    file.WriteLine(str);
+                    Console.WriteLine(str);
                 }
             }
+
+            if (l1)
+            {
+                while (aIndex.Count > 0)
+                {
+                    int str = aIndex.Pop();
+                    file.WriteLine(str);
+                    Console.WriteLine(str);
+                }
+            }
+
+            if (l2)
+            {
+                while (bIndex.Count > 0)
+                {
+                    int str = bIndex.Pop();
+                    file.WriteLine(str);
+                    Console.WriteLine(str);
+                }
+            }
+
         }
     }
 }
