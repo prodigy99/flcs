@@ -9,7 +9,6 @@ c[i][j] =   0   i = 0 或 j = 0
             c[i-1][j-1] + 1   i,j > 0 且 X[i] = Y[j]
             max(c[i][j-1],c[i-1][j]) i,j > 0 且 X[i] <> Y[j]
 '''
-from fileinput import close
 from getopt import getopt
 import sys
 
@@ -38,13 +37,16 @@ def analyzeSequence(seqALength:int, seqBLength:int):
         for j in range(seqBLength + 1):
             if i == 0 or j == 0:
                 ltsTable[i][j] = 0
+                print(0)
 
             else:
                 if sequenceA[i-1] == sequenceB[j - 1]:
                     ltsTable[i][j] = ltsTable[i-1][j-1] + 1
                     directionTable[i][j] = 0 # 继承左上的值
+                    print(1)
                 else:
                     ltsTable[i][j] = max(ltsTable[i-1][j], ltsTable[i][j-1])
+                    print(2)
                     if ltsTable[i-1][j] > ltsTable[i][j-1]:
                         directionTable[i][j] = 1 # 继承正上面的值
                     elif ltsTable[i-1][j] == ltsTable[i][j-1]:
@@ -63,14 +65,14 @@ def findLTS():
     i = len(sequenceA)
     j = len(sequenceB)
 
-    lcsArr = [];
-    Aindex=[];
-    Bindex=[];
+    lcsArr = []
+    Aindex = []
+    Bindex = []
     while i != 0 and j != 0:
-        if sequenceA[i-1]==sequenceB[j-1] :
-            lcsArr.insert(0,sequenceA[i-1])
-            Aindex.insert(0,i)
-            Bindex.insert(0,j)
+        if sequenceA[i-1] == sequenceB[j-1] :
+            lcsArr.insert(0, sequenceA[i-1])
+            Aindex.insert(0, i - 1)
+            Bindex.insert(0, j - 1)
         
         if directionTable[i][j] == 0 :
             i = i - 1
@@ -80,13 +82,15 @@ def findLTS():
         else:
             j = j - 1
     
+    print("LCS：")
+    for k in lcsArr : print(k)
+
     if printLCSIndexInFile1 == True :
+        print("LCS元素在文件1中的行号（从1开始）：")
         for i in Aindex : print(i)
-    elif printLCSIndexInFile2 == True :
+    if printLCSIndexInFile2 == True :
+        print("LCS元素在文件2中的行号（从1开始）：")
         for j in Bindex : print(j)
-    else:
-        for k in lcsArr : print(k)
-        
 
 
 '''
