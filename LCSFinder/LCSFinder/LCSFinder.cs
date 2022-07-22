@@ -6,18 +6,34 @@ using System.Text;
 using System.Threading.Tasks;
 namespace LCS
 {
-    internal class LCSFinder<T> where T : IComparable
+    public class LCSFinder<T> where T : IComparable
     {
+        /// <summary>
+        /// 序列A
+        /// </summary>
         public T[] SequenceA { get; }
+        /// <summary>
+        /// 序列B
+        /// </summary>
         public T[] SequenceB { get; }
 
+        /// <summary>
+        /// 用于在动态规划算法中存储已经解决过的问题的答案
+        /// </summary>
         public ushort[,] LCSTable { get; private set; }
+        /// <summary>
+        /// 用于在动态规划算法中指明
+        /// 已解决问题的答案来源
+        /// </summary>
         public LongBitArray DirectionTable { get; private set; }
 
         private Stack<T> lcs = new();
         private Stack<int> aIndex = new();
         private Stack<int> bIndex = new();
 
+        /// <summary>
+        /// 最长公共子序列
+        /// </summary>
         public List<T> LongestCommonSequence
         {
             get
@@ -26,6 +42,9 @@ namespace LCS
             }
         }
 
+        /// <summary>
+        /// 最长公共子序列在A中的元素位置
+        /// </summary>
         public List<int> LCSElementIndexInSequenceA
         {
             get
@@ -34,6 +53,9 @@ namespace LCS
             }
         }
 
+        /// <summary>
+        /// 最长公共子序列在B中的元素位置
+        /// </summary>
         public List<int> LCSElementIndexInSequenceB
         {
             get
@@ -106,13 +128,15 @@ namespace LCS
                     }
                 }
             }
+
+            FindLCS();
         }
 
-        // 输出结果
-        public void showLCS(bool onlyLCS, bool l1, bool l2)
+        /// <summary>
+        /// 获取最长公共子序列
+        /// </summary>
+        private void FindLCS()
         {
-
-            using StreamWriter file = new("result.txt");
             lcs.Clear();
             aIndex.Clear();
             bIndex.Clear();
@@ -143,36 +167,6 @@ namespace LCS
                     --j;
                 }
             }
-            if (onlyLCS)
-            {
-                while (lcs.Count > 0)
-                {
-                    T str = lcs.Pop();
-                    file.WriteLine(str);
-                    Console.WriteLine(str);
-                }
-            }
-
-            if (l1)
-            {
-                while (aIndex.Count > 0)
-                {
-                    int str = aIndex.Pop();
-                    file.WriteLine(str);
-                    Console.WriteLine(str);
-                }
-            }
-
-            if (l2)
-            {
-                while (bIndex.Count > 0)
-                {
-                    int str = bIndex.Pop();
-                    file.WriteLine(str);
-                    Console.WriteLine(str);
-                }
-            }
-
         }
     }
 }
